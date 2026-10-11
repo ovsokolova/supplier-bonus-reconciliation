@@ -8,8 +8,8 @@ P2 — желательно · P3 — после PoC
 
 - [ ] 0.1 pyproject.toml, .env.example, README.md
 - [ ] 0.2 Структура: src/supplier_bonus/, tests/, data/examples/
-- [ ] 0.3 .gitignore (уже есть), pre-commit
-- [ ] 0.4 .github/workflows/ci.yml (lint + pytest)
+- [x] 0.3 .gitignore (уже есть), pre-commit
+- [x] 0.4 .github/workflows/ci.yml (lint + pytest)
 - [ ] 0.5 Проверить зрелость docket-idp (см. ADR-001)
 
 ## 1. Извлечение (P0)
@@ -24,12 +24,11 @@ P2 — желательно · P3 — после PoC
 
 ## 2. Сверка (P0)
 
-- [ ] 2.1 Outer join по ИНН с fallback на наименование
-- [ ] 2.2 Нормализация ключей + поля *_raw
-- [ ] 2.3 rapidfuzz (token_sort_ratio + WRatio), порог 90
+- [x] 2.1 Outer join по ИНН с fallback на наименование
+- [x] 2.2 Нормализация ключей + поля *_raw
+- [x] 2.3 rapidfuzz (token_sort_ratio + WRatio), порог 90
 - [ ] 2.4 Допуск AMOUNT_TOLERANCE через конфиг (NFR-2.4)
-- [ ] 2.5 Статусы: matched, matched_by_inn, matched_fuzzy,
-      amount_mismatch, missing_*
+- [x] 2.5 Статусы: matched, matched_by_inn, matched_fuzzy, amount_mismatch, missing_*
 - [ ] 2.6 Обработка множественных кандидатов
 - [ ] 2.7 Сводная статистика
 

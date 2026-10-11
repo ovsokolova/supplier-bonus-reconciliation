@@ -20,6 +20,8 @@ from docket import (
     register_schema,
 )
 
+from pydantic import ValidationError
+
 from supplier_bonus.config import Settings, get_settings
 from supplier_bonus.schemas import BonusTerms, FieldSource
 
@@ -60,8 +62,8 @@ def register_bonus_schema(*, replace_existing: bool = False) -> SchemaSpec:
     try:
         register_schema(spec, replace_existing=replace_existing)
         logger.info("Schema %s зарегистрирована", SCHEMA_ID)
-    except Exception as exc:  # noqa: BLE001
-        logger.warning("Schema %s: %s", SCHEMA_ID, exc)
+    except ValueError as exc:
+        logger.warning("Schema %s уже зарегистрирована: %s", SCHEMA_ID, exc)
     return spec
 
 
@@ -142,8 +144,8 @@ def extract_terms(
         else:
             try:
                 terms.append(BonusTerms.model_validate(doc))
-            except Exception as exc:  # noqa: BLE001
-                logger.warning("Пропуск документа: %s", exc)
+            except ValidationError as exc:
+                logger.warning("Пропуск документа (валидация): %s", exc)
 
     if not terms:
         logger.warning("Извлечение не дало результатов для %s", source)

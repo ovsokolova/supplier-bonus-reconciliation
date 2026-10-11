@@ -44,6 +44,12 @@ class Settings:
     # Данные
     test_data_path: Path = Path(os.getenv("TEST_DATA_PATH", "./data/examples"))
 
+    def ensure_dirs(self) -> None:
+        """Создаёт каталоги, которые нужны приложению."""
+        if self.review_documents_dir:
+            Path(self.review_documents_dir).mkdir(parents=True, exist_ok=True)
+        self.test_data_path.mkdir(parents=True, exist_ok=True)
+
 
 def get_settings() -> Settings:
     return Settings()
