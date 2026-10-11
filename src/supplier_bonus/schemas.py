@@ -2,20 +2,19 @@
 
 from __future__ import annotations
 
-from enum import Enum
-from typing import Optional
+from enum import StrEnum
 
 from docket import CitedDocument
 from pydantic import BaseModel, Field, field_validator
 
 
-class BonusType(str, Enum):
+class BonusType(StrEnum):
     MONETARY = "monetary"
     GOODS = "goods"
     MIXED = "mixed"
 
 
-class BaseMetric(str, Enum):
+class BaseMetric(StrEnum):
     PURCHASE_VOLUME = "purchase_volume"
     PAYMENT_AMOUNT = "payment_amount"
     QUANTITY = "quantity"
@@ -28,7 +27,7 @@ class Tier(BaseModel):
 
 class Inn(BaseModel):
     value: str = Field(pattern=r"^\d{10}$|^\d{12}$")
-    kpp: Optional[str] = Field(default=None, pattern=r"^\d{9}$")
+    kpp: str | None = Field(default=None, pattern=r"^\d{9}$")
 
 
 class BonusTerms(CitedDocument):
@@ -40,14 +39,14 @@ class BonusTerms(CitedDocument):
     """
 
     supplier_name: str
-    supplier_name_raw: Optional[str] = None
-    inn: Optional[Inn] = None
+    supplier_name_raw: str | None = None
+    inn: Inn | None = None
     bonus_type: BonusType
     base_metric: BaseMetric
     tiers: list[Tier] = Field(default_factory=list)
     period: str = Field(pattern=r"^\d{4}-Q[1-4]$|^\d{4}-\d{2}$")
     currency: str = "RUB"
-    tax_included: Optional[bool] = None
+    tax_included: bool | None = None
 
     @field_validator("tiers")
     @classmethod
@@ -58,7 +57,7 @@ class BonusTerms(CitedDocument):
         return v
 
 
-class MatchStatus(str, Enum):
+class MatchStatus(StrEnum):
     MATCHED = "matched"
     MATCHED_BY_INN = "matched_by_inn"
     MATCHED_FUZZY = "matched_fuzzy"
@@ -73,24 +72,24 @@ class MatchStatus(str, Enum):
 class FieldSource(BaseModel):
     """Доменное представление docket.SourceLocation для UI и отчётов."""
 
-    page: Optional[int] = None
-    quote: Optional[str] = None
-    status: Optional[str] = None
-    bbox: Optional[list[float]] = None
-    confidence: Optional[float] = None
-    located_by: Optional[str] = None
+    page: int | None = None
+    quote: str | None = None
+    status: str | None = None
+    bbox: list[float] | None = None
+    confidence: float | None = None
+    located_by: str | None = None
 
 
 class ReconciliationRow(BaseModel):
     supplier_name: str
-    supplier_name_raw: Optional[str] = None
+    supplier_name_raw: str | None = None
     period: str
-    expected: Optional[float] = None
-    actual: Optional[float] = None
-    diff: Optional[float] = None
-    similarity: Optional[float] = None
+    expected: float | None = None
+    actual: float | None = None
+    diff: float | None = None
+    similarity: float | None = None
     status: MatchStatus
-    notes: Optional[str] = None
+    notes: str | None = None
 
 
 class ReconciliationSummary(BaseModel):

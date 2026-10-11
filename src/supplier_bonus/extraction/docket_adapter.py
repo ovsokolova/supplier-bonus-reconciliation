@@ -3,16 +3,16 @@
 from __future__ import annotations
 
 import logging
+from collections.abc import Sequence
 from pathlib import Path
-from typing import Sequence
 
 from docket import (
     DocumentResult,
     FieldRule,
     LLMBackend,
+    OcrOptions,
     OllamaBackend,
     OpenAICompatibleBackend,
-    OcrOptions,
     ProcessOptions,
     ReviewOptions,
     SchemaSpec,
@@ -162,14 +162,19 @@ def _iter_documents(result: DocumentResult) -> Sequence[object]:
 
 
 def to_field_sources(result: DocumentResult) -> dict[str, FieldSource]:
-    """Конвертирует SourceLocation -> доменный FieldSource."""
+    """Конвертирует SourceLocation -> доменный FieldSource.
+
+    Геометрия (bbox) не переносится: в PoC она не используется.
+    docket.BoundingBox — pydantic-модель, итерируется как (key, value),
+    а не как (x0, y0, x1, y1). Вернёмся к конвертации в задаче 4.2
+    (подсветка источника в UI).
+    """
     out: dict[str, FieldSource] = {}
     for field_path, location in (result.field_sources or {}).items():
         out[field_path] = FieldSource(
             page=location.page,
             quote=location.quote,
             status=location.status,
-            bbox=list(location.bbox) if location.bbox is not None else None,
             confidence=location.confidence,
             located_by=location.located_by,
         )
