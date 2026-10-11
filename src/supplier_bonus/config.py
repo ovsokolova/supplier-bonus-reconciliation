@@ -51,5 +51,9 @@ class Settings:
         self.test_data_path.mkdir(parents=True, exist_ok=True)
 
 
-def get_settings() -> Settings:
-    return Settings()
+def get_settings(*, ensure_dirs: bool = False) -> Settings:
+    """Возвращает настройки. При ensure_dirs=True создаёт каталоги."""
+    s = Settings()
+    if ensure_dirs:
+        s.ensure_dirs()
+    return s

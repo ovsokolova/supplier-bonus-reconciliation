@@ -38,3 +38,5 @@ data/
 .coverage.*
 htmlcov/
 coverage.xml
+# setuptools egg-info
+*.egg-info/

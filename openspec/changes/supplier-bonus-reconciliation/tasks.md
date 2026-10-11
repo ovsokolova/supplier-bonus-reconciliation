@@ -24,11 +24,11 @@ P2 — желательно · P3 — после PoC
 
 ## 2. Сверка (P0)
 
-- [x] 2.1 Outer join по ИНН с fallback на наименование
-- [x] 2.2 Нормализация ключей + поля *_raw
-- [x] 2.3 rapidfuzz (token_sort_ratio + WRatio), порог 90
+- [ ] 2.1 Outer join по ИНН с fallback на наименование
+- [ ] 2.2 Нормализация ключей + поля *_raw
+- [ ] 2.3 rapidfuzz (token_sort_ratio + WRatio), порог 90
 - [ ] 2.4 Допуск AMOUNT_TOLERANCE через конфиг (NFR-2.4)
-- [x] 2.5 Статусы: matched, matched_by_inn, matched_fuzzy, amount_mismatch, missing_*
+- [ ] 2.5 Статусы: matched, matched_by_inn, matched_fuzzy, amount_mismatch, missing_*
 - [ ] 2.6 Обработка множественных кандидатов
 - [ ] 2.7 Сводная статистика
 
