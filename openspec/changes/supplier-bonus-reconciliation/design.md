@@ -64,3 +64,15 @@ flowchart LR
 | Ложные missing_* | нормализация + rapidfuzz |
 | Утечка коммерческой тайны | только локальный Ollama |
 | Короткие наименования | token_sort + ИНН/код товара |
+## План миграции после PoC
+
+| Этап | UI | API | Комментарий |
+|---|---|---|---|
+| PoC | Streamlit | in-process | Быстрый прототип |
+| MVP | Streamlit | FastAPI (отдельно) | Разделение UI и логики |
+| Prod | React / Next.js | FastAPI | Готовность к нагрузке |
+
+**Принцип**: вся бизнес-логика (extraction, reconciliation,
+reporting) выносится в src/ как чистые модули без зависимостей
+от Streamlit. UI — тонкая обёртка. Это позволяет заменить
+Streamlit на React без переписывания логики.

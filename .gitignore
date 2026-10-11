@@ -25,3 +25,9 @@ data/
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/
+
+# Разрешить синтетические фикстуры в data/examples/
+!data/examples/
+!data/examples/*.csv
+!data/examples/*.xlsx
+!data/examples/*.pdf
