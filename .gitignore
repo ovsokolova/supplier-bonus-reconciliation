@@ -1,4 +1,4 @@
-﻿# Python
+# Python
 __pycache__/
 *.py[cod]
 .venv/
@@ -31,3 +31,10 @@ data/
 !data/examples/*.csv
 !data/examples/*.xlsx
 !data/examples/*.pdf
+
+
+# Coverage
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
