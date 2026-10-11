@@ -1,0 +1,49 @@
+﻿Help on class OpenAICompatibleBackend in module docket.llm_client:
+
+class OpenAICompatibleBackend(builtins.object)
+ |  OpenAICompatibleBackend(*, base_url: 'str | None' = None, api_key: 'str | None' = None, text_model: 'str | None' = None, vision_model: 'str | None' = None, structured_output: 'str | None' = None) -> 'None'
+ |
+ |  Any OpenAI-compatible Chat Completions API: vLLM, llama.cpp's
+ |  llama-server, LM Studio, LocalAI, Ollama's /v1, or a hosted API.
+ |
+ |  With a schema it asks for `response_format: json_schema` (non-strict:
+ |  Pydantic schemas rarely meet strict mode's rules), which vLLM, llama.cpp
+ |  and LM Studio turn into constrained decoding; a server that refuses it
+ |  gets `json_object` instead, from then on. `structured_output="json_object"`
+ |  skips the attempt. Arguments left None come from `config`
+ |  (DOCKET_LLM_BASE_URL, DOCKET_LLM_API_KEY, DOCKET_TEXT_MODEL,
+ |  DOCKET_VISION_MODEL, DOCKET_LLM_STRUCTURED_OUTPUT) at call time.
+ |
+ |  Methods defined here:
+ |
+ |  __init__(self, *, base_url: 'str | None' = None, api_key: 'str | None' = None, text_model: 'str | None' = None, vision_model: 'str | None' = None, structured_output: 'str | None' = None) -> 'None'
+ |      Initialize self.  See help(type(self)) for accurate signature.
+ |
+ |  generate_json(self, prompt: 'str', *, schema: 'dict | None', timeout: 'float') -> 'LLMReply'
+ |
+ |  transcribe_image(self, image: 'bytes', *, mime: 'str', prompt: 'str', timeout: 'float') -> 'LLMReply'
+ |
+ |  ----------------------------------------------------------------------
+ |  Readonly properties defined here:
+ |
+ |  api_key
+ |
+ |  base_url
+ |
+ |  hosted
+ |
+ |  structured_output
+ |
+ |  text_model
+ |
+ |  vision_model
+ |
+ |  ----------------------------------------------------------------------
+ |  Data descriptors defined here:
+ |
+ |  __dict__
+ |      dictionary for instance variables
+ |
+ |  __weakref__
+ |      list of weak references to the object
+

@@ -1,0 +1,38 @@
+﻿Help on class OllamaBackend in module docket.llm_client:
+
+class OllamaBackend(builtins.object)
+ |  OllamaBackend(*, host: 'str | None' = None, text_model: 'str | None' = None, vision_model: 'str | None' = None, think: 'bool | None' = None) -> 'None'
+ |
+ |  Ollama's native /api/chat, local or cloud. Every argument left None is
+ |  read from `config` (OLLAMA_HOST, DOCKET_TEXT_MODEL, DOCKET_VISION_MODEL,
+ |  DOCKET_ENABLE_THINKING) at call time.
+ |
+ |  Methods defined here:
+ |
+ |  __init__(self, *, host: 'str | None' = None, text_model: 'str | None' = None, vision_model: 'str | None' = None, think: 'bool | None' = None) -> 'None'
+ |      Initialize self.  See help(type(self)) for accurate signature.
+ |
+ |  generate_json(self, prompt: 'str', *, schema: 'dict | None', timeout: 'float') -> 'LLMReply'
+ |
+ |  transcribe_image(self, image: 'bytes', *, mime: 'str', prompt: 'str', timeout: 'float') -> 'LLMReply'
+ |
+ |  ----------------------------------------------------------------------
+ |  Readonly properties defined here:
+ |
+ |  host
+ |
+ |  text_model
+ |
+ |  think
+ |
+ |  vision_model
+ |
+ |  ----------------------------------------------------------------------
+ |  Data descriptors defined here:
+ |
+ |  __dict__
+ |      dictionary for instance variables
+ |
+ |  __weakref__
+ |      list of weak references to the object
+

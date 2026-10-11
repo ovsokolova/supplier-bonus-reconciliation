@@ -1,0 +1,9 @@
+﻿python : Traceback (most recent call last):
+строка:4 знак:5
++     python -c "import docket; help(docket.$name)" 2>&1 |
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Traceback (most recent call last)::String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  File "<string>", line 1, in <module>
+AttributeError: module 'docket' has no attribute 'ResolvedOptions'. Did you mean: 'ReviewOptions'?

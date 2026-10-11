@@ -1,0 +1,45 @@
+﻿Help on class OcrBackend in module docket.ocr.base:
+
+class OcrBackend(abc.ABC)
+ |  OcrBackend(settings: 'OcrSettings | None' = None) -> 'None'
+ |
+ |  Method resolution order:
+ |      OcrBackend
+ |      abc.ABC
+ |      builtins.object
+ |
+ |  Methods defined here:
+ |
+ |  __init__(self, settings: 'OcrSettings | None' = None) -> 'None'
+ |      Initialize self.  See help(type(self)) for accurate signature.
+ |
+ |  __repr__(self) -> 'str'
+ |      Return repr(self).
+ |
+ |  availability(self) -> 'BackendStatus'
+ |      Whether this backend can run here Ч cheap, no page is read.
+ |
+ |  recognize_document(self, document: 'DocumentSource') -> 'DocumentLayout'
+ |      Read every page. Override when the engine is faster on a whole file.
+ |
+ |  recognize_page(self, page: 'PageSource') -> 'PageLayout'
+ |      Read one page. Raise OcrError on failure, never return None.
+ |
+ |  require_available(self) -> 'None'
+ |
+ |  ----------------------------------------------------------------------
+ |  Data descriptors defined here:
+ |
+ |  __dict__
+ |      dictionary for instance variables
+ |
+ |  __weakref__
+ |      list of weak references to the object
+ |
+ |  ----------------------------------------------------------------------
+ |  Data and other attributes defined here:
+ |
+ |  __abstractmethods__ = frozenset({'availability', 'recognize_page'})
+ |
+ |  __annotations__ = {'capabilities': 'ClassVar[Capabilities]', 'name': '...
+

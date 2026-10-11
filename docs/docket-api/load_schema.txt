@@ -1,0 +1,5 @@
+﻿Help on function load_schema in module docket.catalog.registry:
+
+load_schema(spec: 'str') -> 'type[BaseModel]'
+    Import a Pydantic model from `package.module:ClassName`.
+

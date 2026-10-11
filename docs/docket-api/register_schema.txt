@@ -1,0 +1,6 @@
+﻿Help on function register_schema in module docket.catalog.registry:
+
+register_schema(spec: 'SchemaSpec', *, replace_existing: 'bool' = False) -> 'SchemaSpec'
+    Add a schema version to the registry. Every check that can fail later
+    fails here instead.
+

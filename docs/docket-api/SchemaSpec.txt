@@ -1,0 +1,87 @@
+﻿Help on class SchemaSpec in module docket.catalog.registry:
+
+class SchemaSpec(builtins.object)
+ |  SchemaSpec(schema_id: 'str', model: 'type[BaseModel]', description: 'str', version: 'str | None' = '1.0', display_name: 'str' = '', status: "Literal['stable', 'experimental']" = 'stable', keywords: 'tuple[Keyword, ...]' = (), examples: 'tuple[str, ...]' = (), cited_fields: 'tuple[str, ...] | None' = None, validators: 'tuple[Validator, ...]' = (), migrations: 'tuple[Migration, ...]' = (), summary: 'dict[str, str]' = <factory>, line_items: 'LineItems | None' = None, builtin: 'bool' = False, registered: 'bool' = True) -> None
+ |
+ |  SchemaSpec(schema_id: 'str', model: 'type[BaseModel]', description: 'str', version: 'str | None' = '1.0', display_name: 'str' = '', status: "Literal['stable', 'experimental']" = 'stable', keywords: 'tuple[Keyword, ...]' = (), examples: 'tuple[str, ...]' = (), cited_fields: 'tuple[str, ...] | None' = None, validators: 'tuple[Validator, ...]' = (), migrations: 'tuple[Migration, ...]' = (), summary: 'dict[str, str]' = <factory>, line_items: 'LineItems | None' = None, builtin: 'bool' = False, registered: 'bool' = True)
+ |
+ |  Methods defined here:
+ |
+ |  __delattr__(self, name)
+ |      Implement delattr(self, name).
+ |
+ |  __eq__(self, other)
+ |      Return self==value.
+ |
+ |  __hash__(self)
+ |      Return hash(self).
+ |
+ |  __init__(self, schema_id: 'str', model: 'type[BaseModel]', description: 'str', version: 'str | None' = '1.0', display_name: 'str' = '', status: "Literal['stable', 'experimental']" = 'stable', keywords: 'tuple[Keyword, ...]' = (), examples: 'tuple[str, ...]' = (), cited_fields: 'tuple[str, ...] | None' = None, validators: 'tuple[Validator, ...]' = (), migrations: 'tuple[Migration, ...]' = (), summary: 'dict[str, str]' = <factory>, line_items: 'LineItems | None' = None, builtin: 'bool' = False, registered: 'bool' = True) -> None
+ |      Initialize self.  See help(type(self)) for accurate signature.
+ |
+ |  __repr__(self)
+ |      Return repr(self).
+ |
+ |  __setattr__(self, name, value)
+ |      Implement setattr(self, name, value).
+ |
+ |  info(self) -> 'SchemaInfo'
+ |
+ |  json_schema(self) -> 'dict'
+ |
+ |  ----------------------------------------------------------------------
+ |  Readonly properties defined here:
+ |
+ |  exporters
+ |      Export formats that accept this schema's model.
+ |
+ |  has_citations
+ |
+ |  required_citations
+ |      Field paths that must carry a citation: `cited_fields`, else every
+ |      required top-level field when the model has citations at all.
+ |
+ |  title
+ |
+ |  ----------------------------------------------------------------------
+ |  Data descriptors defined here:
+ |
+ |  __dict__
+ |      dictionary for instance variables
+ |
+ |  __weakref__
+ |      list of weak references to the object
+ |
+ |  ----------------------------------------------------------------------
+ |  Data and other attributes defined here:
+ |
+ |  __annotations__ = {'builtin': 'bool', 'cited_fields': 'tuple[str, ...]...
+ |
+ |  __dataclass_fields__ = {'builtin': Field(name='builtin',type='bool',de...
+ |
+ |  __dataclass_params__ = _DataclassParams(init=True,repr=True,eq=True,or...
+ |
+ |  __match_args__ = ('schema_id', 'model', 'description', 'version', 'dis...
+ |
+ |  builtin = False
+ |
+ |  cited_fields = None
+ |
+ |  display_name = ''
+ |
+ |  examples = ()
+ |
+ |  keywords = ()
+ |
+ |  line_items = None
+ |
+ |  migrations = ()
+ |
+ |  registered = True
+ |
+ |  status = 'stable'
+ |
+ |  validators = ()
+ |
+ |  version = '1.0'
+

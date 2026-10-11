@@ -1,0 +1,27 @@
+Metadata-Version: 2.4
+Name: supplier-bonus-reconciliation
+Version: 0.1.0
+Summary: Автоматическая сверка взаиморасчётов и бонусов поставщиков
+Requires-Python: >=3.11
+Requires-Dist: pandas>=2.2
+Requires-Dist: rapidfuzz>=3.9
+Requires-Dist: pydantic>=2.7
+Requires-Dist: streamlit>=1.36
+Requires-Dist: xlsxwriter>=3.2
+Requires-Dist: openpyxl>=3.1
+Requires-Dist: python-dotenv>=1.0
+Requires-Dist: httpx>=0.27
+Provides-Extra: extraction
+Requires-Dist: pytesseract>=0.3.10; extra == "extraction"
+Requires-Dist: paddleocr>=2.7; extra == "extraction"
+Requires-Dist: pdfplumber>=0.11; extra == "extraction"
+Provides-Extra: llm
+Requires-Dist: ollama>=0.3; extra == "llm"
+Provides-Extra: dev
+Requires-Dist: pytest>=8.2; extra == "dev"
+Requires-Dist: pytest-cov>=5.0; extra == "dev"
+Requires-Dist: ruff>=0.5; extra == "dev"
+Requires-Dist: black>=24.4; extra == "dev"
+Requires-Dist: mypy>=1.10; extra == "dev"
+Requires-Dist: pre-commit>=3.7; extra == "dev"
+Requires-Dist: types-requests; extra == "dev"

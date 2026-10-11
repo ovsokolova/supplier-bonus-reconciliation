@@ -1,0 +1,45 @@
+﻿Help on module docket.validate in docket:
+
+NAME
+    docket.validate - Business-rule validation layer.
+
+DESCRIPTION
+    Pydantic already rejects malformed types (bad dates, missing required
+    fields) before an object gets here Ч this module checks things a schema
+    can't express: totals that don't add up, dates in the wrong order, IDs
+    that don't look like IDs. Classic NLP/rules territory, deliberately kept
+    free of any LLM call.
+
+FUNCTIONS
+    assess_contract_risks(c: 'Contract') -> 'list[str]'
+        Identifies business and legal risk factors deterministically from contract terms.
+
+    validate(document, raw_text: 'str | None' = None, *, pages: 'list[str] | None' = None, witness_pages: 'list[str | None] | None' = None, vlm_unconfirmed: 'bool' = False, spec: 'SchemaSpec | None' = None) -> 'list[ValidationIssue]'
+        Every deterministic check for one extracted document.
+
+        `spec` is the schema the document was extracted with; when omitted it is
+        looked up by the document's model. Citation checks run for the spec's
+        cited fields, then each of its validators.
+
+    validate_bank_statement(stmt: 'BankStatement', ctx: 'ValidationContext') -> 'list[ValidationIssue]'
+
+    validate_billing(inv, ctx: 'ValidationContext') -> 'list[ValidationIssue]'
+        Invoice, tax invoice and credit note: one set of rules, since they
+        share their structure (see catalog.models._Billing).
+
+    validate_contract(c: 'Contract', ctx: 'ValidationContext') -> 'list[ValidationIssue]'
+
+    validate_purchase_order(po: 'PurchaseOrder', ctx: 'ValidationContext') -> 'list[ValidationIssue]'
+
+    validate_receipt(rec: 'Receipt', ctx: 'ValidationContext') -> 'list[ValidationIssue]'
+
+    validate_waybill(wb: 'Waybill', ctx: 'ValidationContext') -> 'list[ValidationIssue]'
+
+    value_at(document, path: 'str')
+        Value at a dotted field path ('seller.name', 'items[0].price'); None
+        where any step is missing.
+
+FILE
+    d:\downloads\ai\supplier-bonus-reconciliation\.venv\lib\site-packages\docket\validate.py
+
+

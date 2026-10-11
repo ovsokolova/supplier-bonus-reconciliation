@@ -1,0 +1,86 @@
+﻿Help on class LLMBackend in module docket.llm_client:
+
+class LLMBackend(typing.Protocol)
+ |  LLMBackend(*args, **kwargs)
+ |
+ |  What the pipeline needs from a language model.
+ |
+ |  Implement it to route docket through your own client (an SDK, a gateway,
+ |  a model loaded in-process) and pass it as `ProcessOptions(llm=...)`.
+ |  `text_model` and `vision_model` name the models for usage metrics and
+ |  traces; an empty `vision_model` means the vlm OCR backend is unavailable.
+ |  Raise `LLMError` on failure Ч any other exception is wrapped into one.
+ |
+ |  `schema` is the JSON Schema the answer must match, when there is one:
+ |  pass it to constrained decoding if your runtime has it. The answer is
+ |  validated against it either way, so best-effort is fine.
+ |
+ |  Method resolution order:
+ |      LLMBackend
+ |      typing.Protocol
+ |      typing.Generic
+ |      builtins.object
+ |
+ |  Methods defined here:
+ |
+ |  __init__ = _no_init_or_replace_init(self, *args, **kwargs) from typing
+ |
+ |  generate_json(self, prompt: 'str', *, schema: 'dict | None', timeout: 'float') -> 'LLMReply'
+ |      Answer `prompt` with one JSON object, as text.
+ |
+ |  transcribe_image(self, image: 'bytes', *, mime: 'str', prompt: 'str', timeout: 'float') -> 'LLMReply'
+ |      Answer `prompt` about the image, as plain text.
+ |
+ |  ----------------------------------------------------------------------
+ |  Class methods defined here:
+ |
+ |  __subclasshook__ = _proto_hook(other) from typing
+ |
+ |  ----------------------------------------------------------------------
+ |  Readonly properties defined here:
+ |
+ |  text_model
+ |
+ |  vision_model
+ |
+ |  ----------------------------------------------------------------------
+ |  Data descriptors defined here:
+ |
+ |  __dict__
+ |      dictionary for instance variables
+ |
+ |  __weakref__
+ |      list of weak references to the object
+ |
+ |  ----------------------------------------------------------------------
+ |  Data and other attributes defined here:
+ |
+ |  __abstractmethods__ = frozenset()
+ |
+ |  __annotations__ = {}
+ |
+ |  __non_callable_proto_members__ = {'text_model', 'vision_model'}
+ |
+ |  __parameters__ = ()
+ |
+ |  __protocol_attrs__ = {'generate_json', 'text_model', 'transcribe_image...
+ |
+ |  ----------------------------------------------------------------------
+ |  Class methods inherited from typing.Protocol:
+ |
+ |  __init_subclass__(*args, **kwargs)
+ |      Function to initialize subclasses.
+ |
+ |  ----------------------------------------------------------------------
+ |  Class methods inherited from typing.Generic:
+ |
+ |  __class_getitem__(...)
+ |      Parameterizes a generic class.
+ |
+ |      At least, parameterizing a generic class is the *main* thing this
+ |      method does. For example, for some generic class `Foo`, this is called
+ |      when we do `Foo[int]` - there, with `cls=Foo` and `params=int`.
+ |
+ |      However, note that this method is also called when defining generic
+ |      classes in the first place with `class Foo[T]: ...`.
+

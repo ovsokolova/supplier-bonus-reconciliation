@@ -20,7 +20,6 @@ dependencies = [
 
 [project.optional-dependencies]
 extraction = [
-    "docket-idp>=0.1",
     "pytesseract>=0.3.10",
     "paddleocr>=2.7",
     "pdfplumber>=0.11",
@@ -35,6 +34,7 @@ dev = [
     "black>=24.4",
     "mypy>=1.10",
     "pre-commit>=3.7",
+    "types-requests",
 ]
 
 [tool.setuptools.packages.find]
@@ -47,14 +47,27 @@ target-version = "py311"
 [tool.ruff.lint]
 select = ["E", "F", "I", "W", "UP", "B", "SIM"]
 
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+
 [tool.black]
 line-length = 100
 target-version = ["py311"]
 
 [tool.mypy]
 python_version = "3.11"
-strict = true
+warn_unused_configs = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_return_any = true
+no_implicit_optional = true
+strict_equality = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
 ignore_missing_imports = true
+exclude = ["tests/"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

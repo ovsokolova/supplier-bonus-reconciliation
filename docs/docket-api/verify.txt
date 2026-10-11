@@ -1,0 +1,11 @@
+﻿Help on function verify in module docket.verification:
+
+verify(document: 'BaseModel | dict', text: 'str | list[str] | None' = None, *, document_type: 'str | None' = None, source: 'str' = '<external>') -> 'DocumentResult'
+    Validate an externally produced document against its source text.
+
+    `document` is a schema instance, or a dict with `document_type` naming
+    its schema; citations go in its `field_locations` ({path: {page, quote}}).
+    `text` is the document's text Ч one string, or one string per page so
+    citations are checked on the page they name. Without it only the
+    document's internal consistency is checked, and the result needs review.
+

@@ -1,0 +1,18 @@
+﻿Help on function process_document in module docket.pipeline:
+
+process_document(source: 'str | Path', options: 'ProcessOptions | ResolvedOptions | None' = None, *, on_stage: 'StageCallback | None' = None) -> 'DocumentResult'
+    Process one document into a DocumentResult.
+
+    `options` (docket.ProcessOptions) picks the OCR chain, fixes the document
+    type or schema (skipping classification), trims the layout from the
+    result and configures review; anything left unset comes from the
+    DOCKET_* environment. `on_stage(stage, payload)` fires after "acquire",
+    "classify", "extract" and "validate".
+
+    If an OCR reading passes its confidence gate but the extraction then
+    fails validation, the document is re-read with the last backend in the
+    chain (the vision model by default) and the better result wins. The
+    OCR confidence score alone is a poor gate; validation checks the meaning
+    of the output, and the re-read is only paid for on documents already
+    known to be broken.
+

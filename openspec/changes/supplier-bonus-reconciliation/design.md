@@ -76,3 +76,14 @@ flowchart LR
 reporting) выносится в src/ как чистые модули без зависимостей
 от Streamlit. UI — тонкая обёртка. Это позволяет заменить
 Streamlit на React без переписывания логики.
+
+### Интеграция с docket
+
+1. `register_bonus_schema()` — SchemaSpec с cited_fields.
+2. `build_process_options()` — OcrOptions + ReviewOptions +
+   OllamaBackend.
+3. `process_document(source, options)` -> DocumentResult.
+4. `result.document` -> BonusTerms (типизированная схема).
+5. `result.field_sources` -> SourceLocation по каждому полю.
+6. `result.needs_review` -> очередь проверки.
+7. `result.highlights()` -> боксы для UI.

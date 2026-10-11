@@ -1,0 +1,16 @@
+﻿Help on function corroborate in module docket.corroboration:
+
+corroborate(result: 'DocumentResult', *, purchase_order: 'PurchaseOrder | None' = None, transactions: 'Sequence[BankTransaction] | BankStatement | None' = None, amount_tolerance: 'float' = 0.01) -> 'DocumentResult'
+    Mark the fields other documents confirm, and drop the review reasons
+    that only doubted those fields.
+
+    - `purchase_order`: its total and subtotal confirm the document's own,
+      in the same currency.
+    - `transactions` (bank or card lines, or a whole `BankStatement`): a
+      payment of the document's total in its currency confirms the total;
+      if the payment's text also carries the document number, that too.
+
+    Returns a new result; `corroborated` records what confirmed each field.
+    A result already written to the review queue stays there Ч removing it
+    is the caller's decision.
+
