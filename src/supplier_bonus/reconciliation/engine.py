@@ -20,7 +20,7 @@ logger = logging.getLogger(__name__)
 
 _FUZZY_SCORERS: tuple[tuple[object, float], ...] = (
     (fuzz.token_sort_ratio, 1.0),
-    (fuzz.WRatio, 1.0),
+    (fuzz.token_set_ratio, 1.0),
 )
 
 

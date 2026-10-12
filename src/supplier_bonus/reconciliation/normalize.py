@@ -7,7 +7,6 @@
 from __future__ import annotations
 
 import re
-import unicodedata
 
 _OPF_PATTERNS = (
     r"\bооо\b",
@@ -23,21 +22,29 @@ _OPF_PATTERNS = (
     r"\bфгуп\b",
 )
 
-_JUNK_CHARS = re.compile(r"[\"'«»„“”‘’`.,;:!?()\[\]{}<>|/\\]+")
+# Мусорные символы: кавычки, точки, запятые, скобки, дефис.
+# Дефис заменяем на пробел, чтобы «Пример-Трейд» → «пример трейд».
+_JUNK_CHARS = re.compile(r"[\"'«»„“”‘’`.,;:!?()\[\]{}<>|/\\-]+")
 _MULTISPACE = re.compile(r"\s+")
 
 
-def _strip_diacritics(text: str) -> str:
-    nfkd = unicodedata.normalize("NFKD", text)
-    return "".join(ch for ch in nfkd if not unicodedata.combining(ch))
-
-
 def normalize_name(name: str) -> str:
-    """Приводит наименование к единому виду для сопоставления."""
+    """Приводит наименование к единому виду для сопоставления.
+
+    Шаги:
+      1. Приведение к нижнему регистру.
+      2. Замена «ё» на «е».
+      3. Удаление ОПФ как отдельных слов.
+      4. Удаление кавычек, точек, запятых, скобок, дефисов.
+      5. Схлопывание пробелов.
+
+    Кириллица не нормализуется через NFKD, потому что это ломает
+    «й» (становится «и») и «ё». Для латиницы с диакритикой
+    нормализация не критична в контексте PoC.
+    """
     if not name:
         return ""
     s = name.strip().lower().replace("ё", "е")
-    s = _strip_diacritics(s)
     for pattern in _OPF_PATTERNS:
         s = re.sub(pattern, " ", s)
     s = _JUNK_CHARS.sub(" ", s)

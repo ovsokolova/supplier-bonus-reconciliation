@@ -23,7 +23,13 @@ def _cmd_extract(args: argparse.Namespace) -> int:
         print(f"Файл не найден: {source}", file=sys.stderr)
         return 2
 
-    terms = extract_terms(source)
+    try:
+        terms = extract_terms(source)
+    except Exception as exc:  # noqa: BLE001
+        print(f"Ошибка извлечения: {exc}", file=sys.stderr)
+        logger.exception("extract failed")
+        return 3
+
     if not terms:
         print("Извлечение не дало результатов.", file=sys.stderr)
         return 1
@@ -38,11 +44,28 @@ def _cmd_reconcile(args: argparse.Namespace) -> int:
     import pandas as pd
 
     from supplier_bonus.reconciliation.engine import MatchConfig, reconcile
+    from supplier_bonus.reporting.excel import export_to_excel
 
     get_settings(ensure_dirs=True)
 
-    contracts = pd.read_csv(args.contracts)
-    actuals = pd.read_csv(args.actuals)
+    contracts_path = Path(args.contracts)
+    actuals_path = Path(args.actuals)
+    if not contracts_path.exists():
+        print(f"Файл не найден: {contracts_path}", file=sys.stderr)
+        return 2
+    if not actuals_path.exists():
+        print(f"Файл не найден: {actuals_path}", file=sys.stderr)
+        return 2
+
+    try:
+        contracts = pd.read_csv(contracts_path, dtype={"inn": str})
+        actuals = pd.read_csv(actuals_path, dtype={"inn": str})
+        contracts = contracts.fillna({"inn": ""})
+        actuals = actuals.fillna({"inn": ""})
+    except Exception as exc:  # noqa: BLE001
+        print(f"Ошибка чтения CSV: {exc}", file=sys.stderr)
+        return 3
+
     cfg = MatchConfig(
         amount_tolerance=args.tolerance,
         fuzzy_threshold=args.fuzzy_threshold,
@@ -61,6 +84,11 @@ def _cmd_reconcile(args: argparse.Namespace) -> int:
         f"  missing_in_contract={s.missing_in_contract}\n"
         f"  period_offset={s.period_offset}"
     )
+
+    if args.out:
+        out = export_to_excel(result, args.out)
+        print(f"Отчёт: {out}")
+
     return 0
 
 
@@ -77,6 +105,7 @@ def main(argv: list[str] | None = None) -> int:
     p_reconcile.add_argument("actuals", help="CSV с фактическими данными")
     p_reconcile.add_argument("--tolerance", type=float, default=1.0)
     p_reconcile.add_argument("--fuzzy-threshold", type=int, default=90)
+    p_reconcile.add_argument("--out", help="Путь для Excel-отчёта")
     p_reconcile.set_defaults(func=_cmd_reconcile)
 
     args = parser.parse_args(argv)
