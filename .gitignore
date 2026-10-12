@@ -13,30 +13,39 @@ venv/
 Thumbs.db
 .DS_Store
 
-# Данные (не коммитим договоры, выгрузки ERP)
-data/
-*.xlsx
-*.xls
-*.csv
-*.pdf
-
 # Логи и кэши
 *.log
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/
 
-# Разрешить синтетические фикстуры в data/examples/
-!data/examples/
-!data/examples/*.csv
-!data/examples/*.xlsx
-!data/examples/*.pdf
-
-
 # Coverage
 .coverage
 .coverage.*
 htmlcov/
 coverage.xml
+
 # setuptools egg-info
 *.egg-info/
+
+# Чувствительные данные (никогда не коммитим)
+data/raw/
+data/uploads/
+data/review/
+
+# Блокируем расширения глобально
+*.pdf
+*.xlsx
+*.xls
+*.csv
+
+# Исключения: синтетические фикстуры разрешены
+!data/examples/
+!data/examples/**
+!data/examples/**/*.pdf
+!data/examples/**/*.csv
+!data/examples/**/*.xlsx
+!data/examples/*.json
+
+# Одноразовые скрипты (не часть проекта)
+scripts/one-shot/

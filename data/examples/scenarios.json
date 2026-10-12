@@ -1,0 +1,564 @@
+{
+  "generated_by": "scripts/generate_fixtures.py",
+  "seed": 42,
+  "scenarios": [
+    {
+      "contract_id": "contract_01",
+      "supplier": {
+        "name": "ООО «Ромашка»",
+        "inn": "7701234567",
+        "kpp": "770101001"
+      },
+      "bonus_type": "monetary",
+      "base_metric": "purchase_volume",
+      "tiers": [
+        {
+          "threshold": 1000000,
+          "rate": 0.02
+        },
+        {
+          "threshold": 5000000,
+          "rate": 0.035
+        }
+      ],
+      "period": "2026-Q1",
+      "currency": "RUB",
+      "tax_included": true,
+      "scenario": "exact_match",
+      "expected_amount": 100000.0,
+      "actual_amount": 100000.0,
+      "actual_name": null,
+      "actual_period": null,
+      "extra_actuals": []
+    },
+    {
+      "contract_id": "contract_02",
+      "supplier": {
+        "name": "ООО «Василёк»",
+        "inn": "7702345678",
+        "kpp": "770201001"
+      },
+      "bonus_type": "monetary",
+      "base_metric": "purchase_volume",
+      "tiers": [
+        {
+          "threshold": 1000000,
+          "rate": 0.02
+        },
+        {
+          "threshold": 5000000,
+          "rate": 0.035
+        }
+      ],
+      "period": "2026-Q1",
+      "currency": "RUB",
+      "tax_included": true,
+      "scenario": "exact_match",
+      "expected_amount": 100000.0,
+      "actual_amount": 100000.0,
+      "actual_name": null,
+      "actual_period": null,
+      "extra_actuals": []
+    },
+    {
+      "contract_id": "contract_03",
+      "supplier": {
+        "name": "АО «Подсолнух»",
+        "inn": "7703456789",
+        "kpp": "770301001"
+      },
+      "bonus_type": "monetary",
+      "base_metric": "purchase_volume",
+      "tiers": [
+        {
+          "threshold": 1000000,
+          "rate": 0.02
+        },
+        {
+          "threshold": 5000000,
+          "rate": 0.035
+        }
+      ],
+      "period": "2026-Q1",
+      "currency": "RUB",
+      "tax_included": true,
+      "scenario": "exact_match",
+      "expected_amount": 100000.0,
+      "actual_amount": 100000.0,
+      "actual_name": null,
+      "actual_period": null,
+      "extra_actuals": []
+    },
+    {
+      "contract_id": "contract_04",
+      "supplier": {
+        "name": "ПАО «Ландыш»",
+        "inn": "7704567890",
+        "kpp": "770401001"
+      },
+      "bonus_type": "monetary",
+      "base_metric": "payment_amount",
+      "tiers": [
+        {
+          "threshold": 1000000,
+          "rate": 0.02
+        }
+      ],
+      "period": "2026-Q1",
+      "currency": "RUB",
+      "tax_included": true,
+      "scenario": "amount_mismatch",
+      "expected_amount": 250000.0,
+      "actual_amount": 200000.0,
+      "actual_name": null,
+      "actual_period": null,
+      "extra_actuals": []
+    },
+    {
+      "contract_id": "contract_05",
+      "supplier": {
+        "name": "ООО «Незабудка»",
+        "inn": "7705678901",
+        "kpp": "770501001"
+      },
+      "bonus_type": "monetary",
+      "base_metric": "payment_amount",
+      "tiers": [
+        {
+          "threshold": 1000000,
+          "rate": 0.02
+        }
+      ],
+      "period": "2026-Q1",
+      "currency": "RUB",
+      "tax_included": true,
+      "scenario": "amount_mismatch",
+      "expected_amount": 250000.0,
+      "actual_amount": 200000.0,
+      "actual_name": null,
+      "actual_period": null,
+      "extra_actuals": []
+    },
+    {
+      "contract_id": "contract_06",
+      "supplier": {
+        "name": "ООО «Одуванчик»",
+        "inn": "7706789012",
+        "kpp": "770601001"
+      },
+      "bonus_type": "monetary",
+      "base_metric": "purchase_volume",
+      "tiers": [
+        {
+          "threshold": 1000000,
+          "rate": 0.02
+        },
+        {
+          "threshold": 5000000,
+          "rate": 0.035
+        }
+      ],
+      "period": "2026-Q1",
+      "currency": "RUB",
+      "tax_included": true,
+      "scenario": "missing_in_actuals",
+      "expected_amount": 75000.0,
+      "actual_amount": 0.0,
+      "actual_name": null,
+      "actual_period": null,
+      "extra_actuals": []
+    },
+    {
+      "contract_id": "contract_07",
+      "supplier": {
+        "name": "ООО «Клевер»",
+        "inn": "7707890123",
+        "kpp": "770701001"
+      },
+      "bonus_type": "monetary",
+      "base_metric": "purchase_volume",
+      "tiers": [
+        {
+          "threshold": 1000000,
+          "rate": 0.02
+        },
+        {
+          "threshold": 5000000,
+          "rate": 0.035
+        }
+      ],
+      "period": "2026-Q1",
+      "currency": "RUB",
+      "tax_included": true,
+      "scenario": "missing_in_actuals",
+      "expected_amount": 75000.0,
+      "actual_amount": 0.0,
+      "actual_name": null,
+      "actual_period": null,
+      "extra_actuals": []
+    },
+    {
+      "contract_id": "contract_08",
+      "supplier": {
+        "name": "ООО «Мимоза»",
+        "inn": "7708901234",
+        "kpp": "770801001"
+      },
+      "bonus_type": "monetary",
+      "base_metric": "quantity",
+      "tiers": [
+        {
+          "threshold": 1000000,
+          "rate": 0.02
+        }
+      ],
+      "period": "2026-Q1",
+      "currency": "RUB",
+      "tax_included": true,
+      "scenario": "missing_in_contract",
+      "expected_amount": 0.0,
+      "actual_amount": 120000.0,
+      "actual_name": null,
+      "actual_period": null,
+      "extra_actuals": [
+        {
+          "supplier_name": "ООО «Мимоза»",
+          "inn": "7708901234",
+          "period": "2026-Q1",
+          "amount": 120000.0
+        }
+      ]
+    },
+    {
+      "contract_id": "contract_09",
+      "supplier": {
+        "name": "ИП Сидоров И.И.",
+        "inn": "770901234512",
+        "kpp": null
+      },
+      "bonus_type": "monetary",
+      "base_metric": "quantity",
+      "tiers": [
+        {
+          "threshold": 1000000,
+          "rate": 0.02
+        }
+      ],
+      "period": "2026-Q1",
+      "currency": "RUB",
+      "tax_included": true,
+      "scenario": "missing_in_contract",
+      "expected_amount": 0.0,
+      "actual_amount": 120000.0,
+      "actual_name": null,
+      "actual_period": null,
+      "extra_actuals": [
+        {
+          "supplier_name": "ИП Сидоров И.И.",
+          "inn": "770901234512",
+          "period": "2026-Q1",
+          "amount": 120000.0
+        }
+      ]
+    },
+    {
+      "contract_id": "contract_10",
+      "supplier": {
+        "name": "ООО «Лилия»",
+        "inn": "7710123456",
+        "kpp": "771001001"
+      },
+      "bonus_type": "monetary",
+      "base_metric": "purchase_volume",
+      "tiers": [
+        {
+          "threshold": 1000000,
+          "rate": 0.02
+        }
+      ],
+      "period": "2026-Q1",
+      "currency": "RUB",
+      "tax_included": true,
+      "scenario": "matched_fuzzy",
+      "expected_amount": 90000.0,
+      "actual_amount": 90000.0,
+      "actual_name": "ООО «Лилия»-Трейд",
+      "actual_period": null,
+      "extra_actuals": []
+    },
+    {
+      "contract_id": "contract_11",
+      "supplier": {
+        "name": "ООО «Лилия»",
+        "inn": "7710123456",
+        "kpp": "771001001"
+      },
+      "bonus_type": "monetary",
+      "base_metric": "purchase_volume",
+      "tiers": [
+        {
+          "threshold": 1000000,
+          "rate": 0.02
+        }
+      ],
+      "period": "2026-Q1",
+      "currency": "RUB",
+      "tax_included": true,
+      "scenario": "matched_fuzzy",
+      "expected_amount": 90000.0,
+      "actual_amount": 90000.0,
+      "actual_name": "ООО «Лилия»-Трейд",
+      "actual_period": null,
+      "extra_actuals": []
+    },
+    {
+      "contract_id": "contract_12",
+      "supplier": {
+        "name": "ООО «Без_ИНН_1»",
+        "inn": null,
+        "kpp": null
+      },
+      "bonus_type": "monetary",
+      "base_metric": "purchase_volume",
+      "tiers": [
+        {
+          "threshold": 1000000,
+          "rate": 0.02
+        }
+      ],
+      "period": "2026-Q2",
+      "currency": "RUB",
+      "tax_included": true,
+      "scenario": "matched_no_inn",
+      "expected_amount": 40000.0,
+      "actual_amount": 40000.0,
+      "actual_name": null,
+      "actual_period": null,
+      "extra_actuals": []
+    },
+    {
+      "contract_id": "contract_13",
+      "supplier": {
+        "name": "ООО «Без_ИНН_2»",
+        "inn": null,
+        "kpp": null
+      },
+      "bonus_type": "monetary",
+      "base_metric": "purchase_volume",
+      "tiers": [
+        {
+          "threshold": 1000000,
+          "rate": 0.02
+        }
+      ],
+      "period": "2026-Q2",
+      "currency": "RUB",
+      "tax_included": true,
+      "scenario": "matched_no_inn",
+      "expected_amount": 40000.0,
+      "actual_amount": 40000.0,
+      "actual_name": null,
+      "actual_period": null,
+      "extra_actuals": []
+    },
+    {
+      "contract_id": "contract_14",
+      "supplier": {
+        "name": "ООО «Василёк»",
+        "inn": "7702345678",
+        "kpp": "770201001"
+      },
+      "bonus_type": "monetary",
+      "base_metric": "purchase_volume",
+      "tiers": [
+        {
+          "threshold": 500000,
+          "rate": 0.01
+        },
+        {
+          "threshold": 2000000,
+          "rate": 0.025
+        },
+        {
+          "threshold": 5000000,
+          "rate": 0.04
+        }
+      ],
+      "period": "2026-Q1",
+      "currency": "RUB",
+      "tax_included": true,
+      "scenario": "tiered_3",
+      "expected_amount": 180000.0,
+      "actual_amount": 180000.0,
+      "actual_name": null,
+      "actual_period": null,
+      "extra_actuals": []
+    },
+    {
+      "contract_id": "contract_15",
+      "supplier": {
+        "name": "АО «Подсолнух»",
+        "inn": "7703456789",
+        "kpp": "770301001"
+      },
+      "bonus_type": "monetary",
+      "base_metric": "purchase_volume",
+      "tiers": [
+        {
+          "threshold": 500000,
+          "rate": 0.01
+        },
+        {
+          "threshold": 2000000,
+          "rate": 0.025
+        },
+        {
+          "threshold": 5000000,
+          "rate": 0.04
+        }
+      ],
+      "period": "2026-Q1",
+      "currency": "RUB",
+      "tax_included": true,
+      "scenario": "tiered_3",
+      "expected_amount": 180000.0,
+      "actual_amount": 180000.0,
+      "actual_name": null,
+      "actual_period": null,
+      "extra_actuals": []
+    },
+    {
+      "contract_id": "contract_16",
+      "supplier": {
+        "name": "ПАО «Ландыш»",
+        "inn": "7704567890",
+        "kpp": "770401001"
+      },
+      "bonus_type": "goods",
+      "base_metric": "quantity",
+      "tiers": [
+        {
+          "threshold": 1000000,
+          "rate": 0.02
+        },
+        {
+          "threshold": 5000000,
+          "rate": 0.035
+        }
+      ],
+      "period": "2026-Q1",
+      "currency": "RUB",
+      "tax_included": true,
+      "scenario": "goods_bonus",
+      "expected_amount": 50000.0,
+      "actual_amount": 50000.0,
+      "actual_name": null,
+      "actual_period": null,
+      "extra_actuals": []
+    },
+    {
+      "contract_id": "contract_17",
+      "supplier": {
+        "name": "ООО «Незабудка»",
+        "inn": "7705678901",
+        "kpp": "770501001"
+      },
+      "bonus_type": "goods",
+      "base_metric": "quantity",
+      "tiers": [
+        {
+          "threshold": 1000000,
+          "rate": 0.02
+        },
+        {
+          "threshold": 5000000,
+          "rate": 0.035
+        }
+      ],
+      "period": "2026-Q1",
+      "currency": "RUB",
+      "tax_included": true,
+      "scenario": "goods_bonus",
+      "expected_amount": 50000.0,
+      "actual_amount": 50000.0,
+      "actual_name": null,
+      "actual_period": null,
+      "extra_actuals": []
+    },
+    {
+      "contract_id": "contract_18",
+      "supplier": {
+        "name": "ООО «Одуванчик»",
+        "inn": "7706789012",
+        "kpp": "770601001"
+      },
+      "bonus_type": "monetary",
+      "base_metric": "payment_amount",
+      "tiers": [
+        {
+          "threshold": 1000000,
+          "rate": 0.02
+        }
+      ],
+      "period": "2026-Q1",
+      "currency": "RUB",
+      "tax_included": true,
+      "scenario": "tax_variants",
+      "expected_amount": 60000.0,
+      "actual_amount": 60000.0,
+      "actual_name": null,
+      "actual_period": null,
+      "extra_actuals": []
+    },
+    {
+      "contract_id": "contract_19",
+      "supplier": {
+        "name": "ООО «Клевер»",
+        "inn": "7707890123",
+        "kpp": "770701001"
+      },
+      "bonus_type": "monetary",
+      "base_metric": "payment_amount",
+      "tiers": [
+        {
+          "threshold": 1000000,
+          "rate": 0.02
+        }
+      ],
+      "period": "2026-Q1",
+      "currency": "RUB",
+      "tax_included": false,
+      "scenario": "tax_variants",
+      "expected_amount": 60000.0,
+      "actual_amount": 60000.0,
+      "actual_name": null,
+      "actual_period": null,
+      "extra_actuals": []
+    },
+    {
+      "contract_id": "contract_20",
+      "supplier": {
+        "name": "ООО «Ромашка»",
+        "inn": "7701234567",
+        "kpp": "770101001"
+      },
+      "bonus_type": "monetary",
+      "base_metric": "purchase_volume",
+      "tiers": [
+        {
+          "threshold": 1000000,
+          "rate": 0.02
+        }
+      ],
+      "period": "2026-Q1",
+      "currency": "RUB",
+      "tax_included": true,
+      "scenario": "period_offset",
+      "expected_amount": 30000.0,
+      "actual_amount": 30000.0,
+      "actual_name": null,
+      "actual_period": "2026-Q2",
+      "extra_actuals": []
+    }
+  ]
+}
