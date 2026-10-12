@@ -8,7 +8,7 @@ from pathlib import Path
 import pandas as pd
 import pytest
 
-from supplier_bonus.reconciliation.engine import MatchConfig, reconcile
+from supplier_bonus.reconciliation.engine import reconcile
 
 FIXTURES = Path("data/examples")
 SCENARIOS = FIXTURES / "scenarios.json"

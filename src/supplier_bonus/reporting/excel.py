@@ -10,9 +10,11 @@ from __future__ import annotations
 
 import logging
 from pathlib import Path
+from typing import Any
 
 from openpyxl import Workbook
 from openpyxl.styles import Alignment, Font, PatternFill
+from openpyxl.worksheet.worksheet import Worksheet
 
 from supplier_bonus.schemas import MatchStatus, ReconciliationResult
 
@@ -54,15 +56,44 @@ _HEADERS = [
     "Статус",
 ]
 
+_COLUMN_WIDTHS = {
+    "A": 30,
+    "B": 30,
+    "C": 12,
+    "D": 14,
+    "E": 14,
+    "F": 14,
+    "G": 14,
+    "H": 22,
+    "I": 40,
+}
+
 _BOLD = Font(bold=True)
 _WRAP = Alignment(wrap_text=True, vertical="top")
 
 
-def _write_status(ws, row: int, col: int, status: MatchStatus) -> None:
+def _write_status(
+    ws: Worksheet,
+    row: int,
+    col: int,
+    status: MatchStatus,
+) -> None:
+    """Пишет статус с цветовой заливкой."""
     cell = ws.cell(row=row, column=col, value=status.value)
     color = _STATUS_FILL.get(status)
     if color:
         cell.fill = PatternFill("solid", fgColor=color)
+
+
+def _write_header(ws: Worksheet) -> None:
+    for idx, header in enumerate(_HEADERS, start=1):
+        c = ws.cell(row=1, column=idx, value=header)
+        c.font = _BOLD
+
+
+def _set_widths(ws: Worksheet) -> None:
+    for letter, width in _COLUMN_WIDTHS.items():
+        ws.column_dimensions[letter].width = width
 
 
 def export_to_excel(result: ReconciliationResult, path: str | Path) -> Path:
@@ -75,9 +106,7 @@ def export_to_excel(result: ReconciliationResult, path: str | Path) -> Path:
     # --- Лист 1: Список сверки ---
     ws = wb.active
     ws.title = SHEET_ROWS
-    for col, h in enumerate(_HEADERS, start=1):
-        c = ws.cell(row=1, column=col, value=h)
-        c.font = _BOLD
+    _write_header(ws)
     for i, row in enumerate(result.rows, start=2):
         ws.cell(row=i, column=1, value=row.supplier_name)
         ws.cell(row=i, column=2, value=row.supplier_name_raw or "")
@@ -87,19 +116,14 @@ def export_to_excel(result: ReconciliationResult, path: str | Path) -> Path:
         ws.cell(row=i, column=6, value=row.diff or 0)
         ws.cell(row=i, column=7, value=row.similarity or 0)
         _write_status(ws, i, 8, row.status)
-    ws.column_dimensions["A"].width = 30
-    ws.column_dimensions["B"].width = 30
-    ws.column_dimensions["C"].width = 12
-    for col in "DEFG":
-        ws.column_dimensions[col].width = 14
-    ws.column_dimensions["H"].width = 22
+    _set_widths(ws)
 
     # --- Лист 2: Сводка сверки ---
     ws2 = wb.create_sheet(SHEET_SUMMARY)
     ws2.cell(row=1, column=1, value="Показатель").font = _BOLD
     ws2.cell(row=1, column=2, value="Значение").font = _BOLD
     s = result.summary
-    rows = [
+    summary_rows: list[tuple[str, Any]] = [
         ("matched", s.matched),
         ("matched_by_inn", s.matched_by_inn),
         ("matched_fuzzy", s.matched_fuzzy),
@@ -113,7 +137,7 @@ def export_to_excel(result: ReconciliationResult, path: str | Path) -> Path:
         ("fuzzy_threshold", result.fuzzy_threshold),
         ("total_rows", len(result.rows)),
     ]
-    for i, (k, v) in enumerate(rows, start=2):
+    for i, (k, v) in enumerate(summary_rows, start=2):
         ws2.cell(row=i, column=1, value=k)
         ws2.cell(row=i, column=2, value=v)
     ws2.column_dimensions["A"].width = 32
@@ -121,9 +145,7 @@ def export_to_excel(result: ReconciliationResult, path: str | Path) -> Path:
 
     # --- Лист 3: Требует обработки ---
     ws3 = wb.create_sheet(SHEET_ISSUES)
-    for col, h in enumerate(_HEADERS, start=1):
-        c = ws3.cell(row=1, column=col, value=h)
-        c.font = _BOLD
+    _write_header(ws3)
     r = 2
     for row in result.rows:
         if row.status not in _ISSUE_STATUSES:
@@ -140,13 +162,7 @@ def export_to_excel(result: ReconciliationResult, path: str | Path) -> Path:
             c = ws3.cell(row=r, column=9, value=row.notes)
             c.alignment = _WRAP
         r += 1
-    ws3.column_dimensions["A"].width = 30
-    ws3.column_dimensions["B"].width = 30
-    ws3.column_dimensions["C"].width = 12
-    for col in "DEFG":
-        ws3.column_dimensions[col].width = 14
-    ws3.column_dimensions["H"].width = 22
-    ws3.column_dimensions["I"].width = 40
+    _set_widths(ws3)
 
     wb.save(path)
     logger.info("Отчёт сохранён: %s", path)

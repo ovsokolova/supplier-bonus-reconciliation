@@ -19,7 +19,6 @@ from docket import (
     process_document,
     register_schema,
 )
-
 from pydantic import ValidationError
 
 from supplier_bonus.config import Settings, get_settings

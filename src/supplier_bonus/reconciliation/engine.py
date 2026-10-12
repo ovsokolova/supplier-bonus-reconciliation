@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import logging
+from collections.abc import Callable
 from dataclasses import dataclass
 
 import pandas as pd
@@ -18,7 +19,7 @@ from supplier_bonus.schemas import (
 
 logger = logging.getLogger(__name__)
 
-_FUZZY_SCORERS: tuple[tuple[object, float], ...] = (
+_FUZZY_SCORERS: tuple[tuple[Callable[[str, str], float], float], ...] = (
     (fuzz.token_sort_ratio, 1.0),
     (fuzz.token_set_ratio, 1.0),
 )

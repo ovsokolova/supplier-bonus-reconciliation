@@ -58,10 +58,8 @@ def _cmd_reconcile(args: argparse.Namespace) -> int:
         return 2
 
     try:
-        contracts = pd.read_csv(contracts_path, dtype={"inn": str})
-        actuals = pd.read_csv(actuals_path, dtype={"inn": str})
-        contracts = contracts.fillna({"inn": ""})
-        actuals = actuals.fillna({"inn": ""})
+        contracts = pd.read_csv(contracts_path, dtype={"inn": str}).fillna({"inn": ""})
+        actuals = pd.read_csv(actuals_path, dtype={"inn": str}).fillna({"inn": ""})
     except Exception as exc:  # noqa: BLE001
         print(f"Ошибка чтения CSV: {exc}", file=sys.stderr)
         return 3
@@ -110,7 +108,7 @@ def main(argv: list[str] | None = None) -> int:
 
     args = parser.parse_args(argv)
     logging.basicConfig(level=logging.INFO)
-    return args.func(args)
+    return int(args.func(args))
 
 
 if __name__ == "__main__":
