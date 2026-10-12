@@ -20,6 +20,11 @@ import pandas as pd
 import streamlit as st
 
 from supplier_bonus.reconciliation.engine import MatchConfig, reconcile
+from supplier_bonus.reporting.claim import (
+    available_periods,
+    available_suppliers,
+    build_claim,
+)
 from supplier_bonus.reporting.excel import export_to_excel
 from supplier_bonus.schemas import MatchStatus, ReconciliationResult
 
@@ -169,6 +174,49 @@ def _render_export(result: ReconciliationResult) -> None:
 # ---------------------------------------------------------------------------
 # Точка входа
 # ---------------------------------------------------------------------------
+
+
+def _render_claim(result: ReconciliationResult) -> None:
+    """Секция «Сформировать претензию»."""
+    st.subheader("Черновик претензии")
+
+    suppliers = available_suppliers(result)
+    if not suppliers:
+        st.info("Расхождений для формирования претензии нет.")
+        return
+
+    col1, col2 = st.columns(2)
+    with col1:
+        supplier_name = st.selectbox("Поставщик", options=suppliers, key="claim_sup")
+    periods = available_periods(result, supplier_name)
+    if not periods:
+        st.info(f"У поставщика {supplier_name} нет расхождений.")
+        return
+    with col2:
+        period = st.selectbox("Период", options=periods, key="claim_period")
+
+    draft = build_claim(result, supplier_name=supplier_name, period=period)
+    if draft.rows_count == 0:
+        st.warning("Расхождений не найдено для выбранной комбинации.")
+        return
+
+    st.caption(
+        f"Строк расхождений: {draft.rows_count}. Итоговая сумма: {draft.total_amount:,.2f} ₽."
+    )
+    st.text_area(
+        "Текст претензии (редактируйте перед отправкой)",
+        value=draft.text,
+        height=400,
+        key="claim_text",
+    )
+    st.download_button(
+        "Скачать претензию (.md)",
+        data=draft.text.encode("utf-8"),
+        file_name=(f"claim_{draft.supplier_name.replace(' ', '_')}_{draft.period}.md"),
+        mime="text/markdown",
+    )
+
+
 def main() -> None:
     st.set_page_config(page_title="Сверка бонусов поставщиков", layout="wide")
     st.title("Сверка бонусов поставщиков")
@@ -241,6 +289,8 @@ def main() -> None:
 
     st.subheader("Экспорт")
     _render_export(result)
+
+    _render_claim(result)
 
 
 if __name__ == "__main__":
