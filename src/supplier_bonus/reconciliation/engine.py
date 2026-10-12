@@ -5,9 +5,10 @@ from __future__ import annotations
 import logging
 from collections.abc import Callable
 from dataclasses import dataclass
+from typing import cast
 
 import pandas as pd
-from rapidfuzz import fuzz, process
+from rapidfuzz import fuzz
 
 from supplier_bonus.reconciliation.normalize import normalize_inn, normalize_name
 from supplier_bonus.schemas import (
@@ -45,19 +46,19 @@ def _best_match(
     haystack: list[str],
     threshold: int,
 ) -> tuple[str, float] | None:
+    """Возвращает лучшего кандидата из haystack или None."""
     if not haystack or not needle:
         return None
-    result = process.extractOne(
-        needle,
-        haystack,
-        scorer=lambda s1, s2, **_: _score(s1, s2),
-    )
-    if result is None:
+    best_candidate: str | None = None
+    best_score = 0.0
+    for candidate in haystack:
+        score = _score(needle, candidate)
+        if score > best_score:
+            best_score = score
+            best_candidate = candidate
+    if best_candidate is None or best_score < threshold:
         return None
-    match, score, _ = result
-    if score < threshold:
-        return None
-    return match, score
+    return best_candidate, best_score
 
 
 def _join_key(row: pd.Series, name_field: str, inn_field: str) -> str:
@@ -104,70 +105,72 @@ def reconcile(
     rows: list[ReconciliationRow] = []
     summary = ReconciliationSummary()
 
-    for _, row in merged.iterrows():
-        name_c = row.get(f"{name_field}_contract")
-        name_a = row.get(f"{name_field}_actual")
-        period = row.get(period_field)
-        amount_c = row.get(f"{amount_field}_contract")
-        amount_a = row.get(f"{amount_field}_actual")
-        inn_c = normalize_inn(row.get(f"{inn_field}_contract"))
-        inn_a = normalize_inn(row.get(f"{inn_field}_actual"))
+    for row in merged.itertuples(index=False):
+        # itertuples быстрее iterrows, но доступ к полям — через ._asdict()
+        # или getattr. Используем getattr с fallback.
+        name_c = getattr(row, f"{name_field}_contract", None)
+        name_a = getattr(row, f"{name_field}_actual", None)
+        period = getattr(row, period_field, None)
+        amount_c = getattr(row, f"{amount_field}_contract", None)
+        amount_a = getattr(row, f"{amount_field}_actual", None)
 
-        if pd.notna(name_c) and pd.notna(name_a):
-            if inn_c and inn_a and inn_c == inn_a:
-                status = MatchStatus.MATCHED_BY_INN
-                summary.matched_by_inn += 1
-            else:
-                status = MatchStatus.MATCHED
-                summary.matched += 1
+        has_name_c = name_c is not None and pd.notna(name_c)
+        has_name_a = name_a is not None and pd.notna(name_a)
+        has_amount_c = isinstance(amount_c, (int, float)) and pd.notna(amount_c)
+        has_amount_a = isinstance(amount_a, (int, float)) and pd.notna(amount_a)
 
-            diff = None
-            if pd.notna(amount_c) and pd.notna(amount_a):
-                diff = float(amount_c) - float(amount_a)
+        if has_name_c and has_name_a:
+            diff: float | None = None
+            if has_amount_c and has_amount_a:
+                diff = float(cast(float, amount_c)) - float(cast(float, amount_a))
                 if abs(diff) <= cfg.amount_tolerance:
                     status = MatchStatus.MATCHED_WITHIN_TOLERANCE
                     summary.matched_within_tolerance += 1
                 else:
                     status = MatchStatus.AMOUNT_MISMATCH
                     summary.amount_mismatch += 1
+            else:
+                status = MatchStatus.MATCHED
+                summary.matched += 1
 
             rows.append(
                 ReconciliationRow(
                     supplier_name=str(name_c),
                     period=str(period),
-                    expected=float(amount_c) if pd.notna(amount_c) else None,
-                    actual=float(amount_a) if pd.notna(amount_a) else None,
+                    expected=float(cast(float, amount_c)) if has_amount_c else None,
+                    actual=float(cast(float, amount_a)) if has_amount_a else None,
                     diff=diff,
                     status=status,
                 )
             )
             continue
 
-        if pd.notna(name_c) and pd.isna(name_a):
+        if has_name_c and not has_name_a:
             summary.missing_in_actuals += 1
             rows.append(
                 ReconciliationRow(
                     supplier_name=str(name_c),
                     period=str(period),
-                    expected=float(amount_c) if pd.notna(amount_c) else None,
+                    expected=float(cast(float, amount_c)) if has_amount_c else None,
                     actual=None,
                     status=MatchStatus.MISSING_IN_ACTUALS,
                 )
             )
             continue
 
-        if pd.isna(name_c) and pd.notna(name_a):
+        if not has_name_c and has_name_a:
             summary.missing_in_contract += 1
             rows.append(
                 ReconciliationRow(
                     supplier_name=str(name_a),
                     period=str(period),
                     expected=None,
-                    actual=float(amount_a) if pd.notna(amount_a) else None,
+                    actual=float(cast(float, amount_a)) if has_amount_a else None,
                     status=MatchStatus.MISSING_IN_CONTRACT,
                 )
             )
 
+    # Fuzzy-fallback для строк missing_in_actuals.
     if cfg.fuzzy_threshold > 0 and actuals.shape[0] > 0:
         actual_names = actuals[name_field].dropna().astype(str).tolist()
         normalized_actual = [normalize_name(n) for n in actual_names]
