@@ -26,6 +26,10 @@ from supplier_bonus.reporting.claim import (
     build_claim,
 )
 from supplier_bonus.reporting.excel import export_to_excel
+from supplier_bonus.reporting.json_export import (
+    claim_to_json,
+    result_to_json,
+)
 from supplier_bonus.schemas import MatchStatus, ReconciliationResult
 
 # ---------------------------------------------------------------------------
