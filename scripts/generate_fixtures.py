@@ -25,6 +25,7 @@ from reportlab.platypus import Paragraph, SimpleDocTemplate, Spacer, Table, Tabl
 
 random.seed(42)  # воспроизводимость
 
+
 # --- Кириллица в PDF через DejaVuSans ---
 def _register_cyrillic_font() -> str:
     """Регистрирует шрифт с кириллицей. Возвращает имя шрифта.
@@ -42,9 +43,7 @@ def _register_cyrillic_font() -> str:
         if path.exists():
             pdfmetrics.registerFont(TTFont("Cyr", str(path)))
             return "Cyr"
-    raise FileNotFoundError(
-        "Не найден шрифт с кириллицей. Установите DejaVuSans или Arial."
-    )
+    raise FileNotFoundError("Не найден шрифт с кириллицей. Установите DejaVuSans или Arial.")
 
 
 @dataclass
@@ -120,7 +119,7 @@ def build_scenarios() -> list[ContractFixture]:
         sup = s[i]
         fixtures.append(
             ContractFixture(
-                contract_id=f"contract_{len(fixtures)+1:02d}",
+                contract_id=f"contract_{len(fixtures) + 1:02d}",
                 supplier=sup,
                 bonus_type="monetary",
                 base_metric="purchase_volume",
@@ -137,7 +136,7 @@ def build_scenarios() -> list[ContractFixture]:
         sup = s[3 + i]
         fixtures.append(
             ContractFixture(
-                contract_id=f"contract_{len(fixtures)+1:02d}",
+                contract_id=f"contract_{len(fixtures) + 1:02d}",
                 supplier=sup,
                 bonus_type="monetary",
                 base_metric="payment_amount",
@@ -145,7 +144,7 @@ def build_scenarios() -> list[ContractFixture]:
                 period="2026-Q1",
                 scenario="amount_mismatch",
                 expected_amount=250_000.0,
-                actual_amount=200_000.0,   # недоплата 50 000
+                actual_amount=200_000.0,  # недоплата 50 000
             )
         )
 
@@ -154,7 +153,7 @@ def build_scenarios() -> list[ContractFixture]:
         sup = s[5 + i]
         fixtures.append(
             ContractFixture(
-                contract_id=f"contract_{len(fixtures)+1:02d}",
+                contract_id=f"contract_{len(fixtures) + 1:02d}",
                 supplier=sup,
                 bonus_type="monetary",
                 base_metric="purchase_volume",
@@ -171,7 +170,7 @@ def build_scenarios() -> list[ContractFixture]:
         sup = s[7 + i]
         fixtures.append(
             ContractFixture(
-                contract_id=f"contract_{len(fixtures)+1:02d}",
+                contract_id=f"contract_{len(fixtures) + 1:02d}",
                 supplier=sup,
                 bonus_type="monetary",
                 base_metric="quantity",
@@ -180,12 +179,14 @@ def build_scenarios() -> list[ContractFixture]:
                 scenario="missing_in_contract",
                 expected_amount=0.0,
                 actual_amount=120_000.0,
-                extra_actuals=[{
-                    "supplier_name": sup.name,
-                    "inn": sup.inn or "",
-                    "period": "2026-Q1",
-                    "amount": 120_000.0,
-                }],
+                extra_actuals=[
+                    {
+                        "supplier_name": sup.name,
+                        "inn": sup.inn or "",
+                        "period": "2026-Q1",
+                        "amount": 120_000.0,
+                    }
+                ],
             )
         )
 
@@ -194,7 +195,7 @@ def build_scenarios() -> list[ContractFixture]:
         sup = s[9]
         fixtures.append(
             ContractFixture(
-                contract_id=f"contract_{len(fixtures)+1:02d}",
+                contract_id=f"contract_{len(fixtures) + 1:02d}",
                 supplier=sup,
                 bonus_type="monetary",
                 base_metric="purchase_volume",
@@ -209,10 +210,10 @@ def build_scenarios() -> list[ContractFixture]:
 
     # 6. matched без ИНН (2 шт.)
     for i in range(2):
-        sup = Supplier(name=f"ООО «Без_ИНН_{i+1}»", inn=None)
+        sup = Supplier(name=f"ООО «Без_ИНН_{i + 1}»", inn=None)
         fixtures.append(
             ContractFixture(
-                contract_id=f"contract_{len(fixtures)+1:02d}",
+                contract_id=f"contract_{len(fixtures) + 1:02d}",
                 supplier=sup,
                 bonus_type="monetary",
                 base_metric="purchase_volume",
@@ -229,7 +230,7 @@ def build_scenarios() -> list[ContractFixture]:
         sup = s[(i + 1) % len(s)]
         fixtures.append(
             ContractFixture(
-                contract_id=f"contract_{len(fixtures)+1:02d}",
+                contract_id=f"contract_{len(fixtures) + 1:02d}",
                 supplier=sup,
                 bonus_type="monetary",
                 base_metric="purchase_volume",
@@ -246,7 +247,7 @@ def build_scenarios() -> list[ContractFixture]:
         sup = s[(i + 3) % len(s)]
         fixtures.append(
             ContractFixture(
-                contract_id=f"contract_{len(fixtures)+1:02d}",
+                contract_id=f"contract_{len(fixtures) + 1:02d}",
                 supplier=sup,
                 bonus_type="goods",
                 base_metric="quantity",
@@ -263,7 +264,7 @@ def build_scenarios() -> list[ContractFixture]:
         sup = s[(i + 5) % len(s)]
         fixtures.append(
             ContractFixture(
-                contract_id=f"contract_{len(fixtures)+1:02d}",
+                contract_id=f"contract_{len(fixtures) + 1:02d}",
                 supplier=sup,
                 bonus_type="monetary",
                 base_metric="payment_amount",
@@ -280,7 +281,7 @@ def build_scenarios() -> list[ContractFixture]:
     sup = s[0]
     fixtures.append(
         ContractFixture(
-            contract_id=f"contract_{len(fixtures)+1:02d}",
+            contract_id=f"contract_{len(fixtures) + 1:02d}",
             supplier=sup,
             bonus_type="monetary",
             base_metric="purchase_volume",

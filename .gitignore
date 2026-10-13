@@ -49,3 +49,6 @@ data/review/
 
 # Одноразовые скрипты (не часть проекта)
 scripts/one-shot/
+
+# E2E-артефакты
+output/
